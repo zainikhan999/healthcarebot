@@ -1,4 +1,3 @@
-// api/index.js
 const express = require("express");
 const serverless = require("serverless-http");
 const dotenv = require("dotenv");
@@ -8,18 +7,10 @@ const cors = require("cors");
 dotenv.config();
 
 const app = express();
-app.use(cors(), {
-  origin: `https://healthcarebot-flame.vercel.app`,
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-});
+app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("✅ Express running via Vercel serverless function!");
-});
-
-app.post("/api/getHealthSummary", async (req, res) => {
+app.post("/", async (req, res) => {
   const { prompt } = req.body;
 
   try {
@@ -27,7 +18,6 @@ app.post("/api/getHealthSummary", async (req, res) => {
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.API_KEY}`,
       { contents: [{ parts: [{ text: prompt }] }] }
     );
-
     res.json(response.data);
   } catch (error) {
     console.error("Gemini API Error:", error);
@@ -35,6 +25,5 @@ app.post("/api/getHealthSummary", async (req, res) => {
   }
 });
 
-app.listen(5000, () => {
-  console.log("Server is running on port 3000");
-});
+module.exports = app;
+module.exports.handler = serverless(app);
