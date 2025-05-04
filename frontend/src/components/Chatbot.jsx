@@ -56,31 +56,42 @@ export const Chatbot = () => {
 
     const currentQuestion = healthQuestions[questionIndex];
 
+    // Construct the prompt
     const prompt = `You are a Preventive Health Care Bot. A user is answering your health-related questions.
 
-    Question: "${currentQuestion}"
-    User Response: "${input}"
+  Question: "${currentQuestion}"
+  User Response: "${input}"
 
-    Your job is to evaluate whether the user has answered the question with clear intent. The answer does NOT have to be grammatically correct or perfectly phrased. Even partial or broken English is acceptable as long as the meaning is clear.
+  Your job is to evaluate whether the user has answered the question with clear intent. The answer does NOT have to be grammatically correct or perfectly phrased. Even partial or broken English is acceptable as long as the meaning is clear.
 
-    For example, responses like:
-    - "I don't exercise"
-    - "carbohydrates and junk food"
-    - "maybe 5 hours"
-    - "yes, diabetic"
-    ...are all acceptable.
+  For example, responses like:
+  - "I don't exercise"
+  - "carbohydrates and junk food"
+  - "maybe 5 hours"
+  - "yes, diabetic"
+  ...are all acceptable.
 
-    If the user answers the question with relevant intent, reply with: [ANSWERED]
+  If the user answers the question with relevant intent, reply with: [ANSWERED]
 
-    If the response is unrelated, empty, or makes no sense in the context of the question, reply with: [REPEAT]
+  If the response is unrelated, empty, or makes no sense in the context of the question, reply with: [REPEAT]
 
-    Only reply with [ANSWERED] or [REPEAT].`;
+  Only reply with [ANSWERED] or [REPEAT].`;
 
     try {
-      // Make the request to the backend instead of directly contacting Gemini
+      // Send the request to the backend with the correct structure
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/getHealthSummary`,
-        { prompt }
+        {
+          contents: [
+            {
+              parts: [
+                {
+                  data: prompt, // Ensure the prompt is in the 'data' field
+                },
+              ],
+            },
+          ],
+        }
       );
 
       const botReply =
@@ -109,12 +120,22 @@ export const Chatbot = () => {
                 The summary should be in markdown format, with headings and bullet points.
                 Use emojis to make it engaging. The summary should be concise and easy to understand.`;
 
-          // Request summary from the backend
+          // Send the summary request to the backend
           const summaryResponse = await axios.post(
             `${
               import.meta.env.VITE_REACT_APP_BACKEND_URL
             }/api/getHealthSummary`,
-            { summaryPrompt }
+            {
+              contents: [
+                {
+                  parts: [
+                    {
+                      data: summaryPrompt, // Ensure summary prompt is in the 'data' field
+                    },
+                  ],
+                },
+              ],
+            }
           );
 
           const summaryText =
