@@ -1,24 +1,15 @@
+require("dotenv").config();
 const express = require("express");
-const serverless = require("serverless-http");
 const axios = require("axios");
 const cors = require("cors");
 
 const app = express();
 
 // Apply CORS correctly
-app.use(
-  cors({
-    origin:
-      "https://healthcarebot-gys1-hltjlq4jf-zainab-khans-projects-57543b62.vercel.app/", // your frontend domain
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"],
-    credentials: true,
-  })
-);
-
+app.use(cors());
 app.use(express.json());
 
-app.post("/", async (req, res) => {
+app.post("/api/getHealthSummary", async (req, res) => {
   const { prompt } = req.body;
 
   try {
@@ -33,6 +24,10 @@ app.post("/", async (req, res) => {
     res.status(500).json({ error: "Error contacting Gemini API" });
   }
 });
+app.get("/", (req, res) => {
+  res.send("Hello from the backend!"); // Simple response for testing
+});
 
-module.exports = app;
-module.exports.handler = serverless(app);
+app.listen(5000, () => {
+  console.log("Server is running on port 5000");
+});
