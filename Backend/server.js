@@ -8,7 +8,10 @@ const cors = require("cors");
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors(), {
+  origin: `http://healthcarebot-flame.vercel.app`,
+  methods: ["GET", "POST"],
+});
 app.use(express.json());
 
 app.get("/", (req, res) => {
