@@ -102,7 +102,7 @@ export const Chatbot = () => {
           ]);
         } else {
           // Generate a summary if all questions are answered
-          const summaryPrompt = `You are a Preventive Health Care Bot. Based on these answers:${userResponses.join(
+          const prompt = `You are a Preventive Health Care Bot. Based on these answers:${userResponses.join(
             "\n"
           )}
                 Generate a clear and friendly summary with practical health advice. 
@@ -114,7 +114,7 @@ export const Chatbot = () => {
             `${
               import.meta.env.VITE_REACT_APP_BACKEND_URL
             }/api/getHealthSummary`,
-            { summaryPrompt }
+            { prompt }
           );
 
           const summaryText =
