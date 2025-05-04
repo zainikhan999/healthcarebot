@@ -81,7 +81,8 @@ Only reply with [ANSWERED] or [REPEAT]. No explanation.`;
     try {
       // Make the request to the backend instead of directly contacting Gemini
       const response = await axios.post(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/getHealthSummary`,
+        `https://healthcarebot-flame.vercel.app/api/getHealthSummary`,
+
         { prompt }
       );
 
@@ -111,9 +112,7 @@ Generate a clear and friendly summary with practical health advice. The summary 
 
           // Request summary from the backend
           const summaryResponse = await axios.post(
-            `${
-              import.meta.env.VITE_REACT_APP_BACKEND_URL
-            }/api/getHealthSummary`,
+            `https://healthcarebot-flame.vercel.app/api/getHealthSummary`,
             {
               prompt: summaryPrompt,
             }
