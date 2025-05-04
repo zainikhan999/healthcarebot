@@ -1,13 +1,20 @@
 const express = require("express");
 const serverless = require("serverless-http");
-const dotenv = require("dotenv");
 const axios = require("axios");
 const cors = require("cors");
 
-dotenv.config();
-
 const app = express();
-app.use(cors());
+
+// Apply CORS correctly
+app.use(
+  cors({
+    origin: "https://healthcarebot-gys1.vercel.app", // your frontend domain
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 app.post("/", async (req, res) => {
@@ -18,6 +25,7 @@ app.post("/", async (req, res) => {
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.API_KEY}`,
       { contents: [{ parts: [{ text: prompt }] }] }
     );
+
     res.json(response.data);
   } catch (error) {
     console.error("Gemini API Error:", error);
