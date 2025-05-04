@@ -20,7 +20,10 @@ app.post("/api/getHealthSummary", async (req, res) => {
 
     res.json(response.data);
   } catch (error) {
-    console.error("Gemini API Error:", error);
+    console.error(
+      "Gemini API Error:",
+      error.response?.data || error.message || error
+    );
     res.status(500).json({ error: "Error contacting Gemini API" });
   }
 });
