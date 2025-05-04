@@ -1,5 +1,5 @@
 # Preventive Health Care Chatbot
-
+Link to the application: https://healthcarebot-4z71.vercel.app/
 ## Description
 
 The **Preventive Health Care Chatbot** is an interactive web application designed to help users evaluate their health status by answering a series of health-related questions. The bot analyzes the user's responses, evaluates intent, and generates a personalized health summary with practical advice.
