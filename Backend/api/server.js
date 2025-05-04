@@ -8,7 +8,8 @@ const app = express();
 // Apply CORS correctly
 app.use(
   cors({
-    origin: "https://healthcarebot-gys1.vercel.app", // your frontend domain
+    origin:
+      "https://healthcarebot-gys1-hltjlq4jf-zainab-khans-projects-57543b62.vercel.app/", // your frontend domain
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
     credentials: true,
