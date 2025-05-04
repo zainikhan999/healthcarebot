@@ -41,8 +41,6 @@ export const Chatbot = () => {
   const messagesEndRef = useRef(null);
   const [summaryText, setSummaryText] = useState("");
 
-  const GEMINI_API_KEY = "AIzaSyAphzP-ZWnBV1Iq-oR5weu9FwwguIep4vo";
-
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -81,8 +79,7 @@ Only reply with [ANSWERED] or [REPEAT]. No explanation.`;
     try {
       // Make the request to the backend instead of directly contacting Gemini
       const response = await axios.post(
-        `https://healthcarebot-flame.vercel.app/api/getHealthSummary`,
-
+        `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/getHealthSummary`,
         { prompt }
       );
 
@@ -112,10 +109,10 @@ Generate a clear and friendly summary with practical health advice. The summary 
 
           // Request summary from the backend
           const summaryResponse = await axios.post(
-            `https://healthcarebot-flame.vercel.app/api/getHealthSummary`,
-            {
-              prompt: summaryPrompt,
-            }
+            `${
+              import.meta.env.VITE_REACT_APP_BACKEND_URL
+            }/api/getHealthSummary`,
+            { prompt }
           );
 
           const summaryText =
