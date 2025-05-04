@@ -9,8 +9,9 @@ dotenv.config();
 
 const app = express();
 app.use(cors(), {
-  origin: `http://healthcarebot-flame.vercel.app`,
+  origin: `https://healthcarebot-flame.vercel.app`,
   methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 });
 app.use(express.json());
 
@@ -34,4 +35,6 @@ app.post("/api/getHealthSummary", async (req, res) => {
   }
 });
 
-module.exports.handler = serverless(app);
+app.listen(5000, () => {
+  console.log("Server is running on port 3000");
+});
