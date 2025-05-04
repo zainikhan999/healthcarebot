@@ -102,17 +102,19 @@ Only reply with [ANSWERED] or [REPEAT]. No explanation.`;
           ]);
         } else {
           // Generate a summary if all questions are answered
-          const summaryPrompt = `You are a Preventive Health Care Bot. Based on these answers:
-${userResponses.join("\n")}
-
-Generate a clear and friendly summary with practical health advice. The summary should be in markdown format, with headings and bullet points. Use emojis to make it engaging. The summary should be concise and easy to understand.`;
+          const summaryPrompt = `You are a Preventive Health Care Bot. Based on these answers:${userResponses.join(
+            "\n"
+          )}
+          Generate a clear and friendly summary with practical health advice. 
+          The summary should be in markdown format, with headings and bullet points.
+           Use emojis to make it engaging. The summary should be concise and easy to understand.`;
 
           // Request summary from the backend
           const summaryResponse = await axios.post(
             `${
               import.meta.env.VITE_REACT_APP_BACKEND_URL
             }/api/getHealthSummary`,
-            { prompt }
+            { summaryPrompt }
           );
 
           const summaryText =
