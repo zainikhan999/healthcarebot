@@ -40,7 +40,7 @@ npm install
 ```
 ### For Backend
 ``` bash
-cd server
+cd Backend
 npm install
 ```
 ### Environment Variables
