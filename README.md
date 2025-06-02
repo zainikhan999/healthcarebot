@@ -53,7 +53,7 @@ npm run dev
 ```
 ### Start the Application backend
 ``` bash
-cd server
+cd Backend
 npm start
 ```
 
